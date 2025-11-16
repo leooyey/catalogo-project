@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+//mapeamento é "/listagem", definido tbm no .jsp
 @WebServlet("/listagem")
 public class ListarItensServlet extends HttpServlet {
 
