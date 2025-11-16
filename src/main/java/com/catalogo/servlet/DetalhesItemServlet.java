@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+//mapeamento é "/detalhes", definido tbm no .jsp
 @WebServlet("/detalhes")
 public class DetalhesItemServlet extends HttpServlet {
 

@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+//mapeamento é "/cadastrar", definido tbm no .jsp
 @WebServlet("/cadastrar")
 public class CadastrarItemServlet extends HttpServlet {
 

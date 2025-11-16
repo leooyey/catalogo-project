@@ -1,5 +1,7 @@
 package com.catalogo.model;
 
+
+//criação da classe que vai representar os itens (livros, filmes ou séries)
 public class ItemMidia {
 
     private int id;

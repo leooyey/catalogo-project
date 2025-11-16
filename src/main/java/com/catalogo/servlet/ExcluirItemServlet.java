@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+//mapeamento é "/excluir", definido tbm no .jsp
 @WebServlet("/excluir")
 public class ExcluirItemServlet extends HttpServlet {
 

@@ -16,6 +16,7 @@ public class ItemMidiaDAO {
         String sql = "INSERT INTO item_midia (titulo, autor_diretor, ano_lancamento, genero, sinopse, tipo_midia) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
+        //aqui prepara o comando pra executar no banco
         try (Connection conn = FabricaDeConexoes.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -28,6 +29,7 @@ public class ItemMidiaDAO {
 
             stmt.executeUpdate();
 
+        //se tiver algum erro/exceção durante a execução do bloco acima, mostra qual foi a msg de erro
         } catch (SQLException e) {
             System.err.println("Erro ao inserir ItemMidia: " + e.getMessage());
             throw new SQLException("Não foi possível cadastrar o item. Verifique a conexão com o banco.", e);
@@ -39,10 +41,12 @@ public class ItemMidiaDAO {
         List<ItemMidia> itens = new ArrayList<>();
         String sql = "SELECT id, titulo, autor_diretor, ano_lancamento, genero, sinopse, tipo_midia FROM item_midia ORDER BY titulo";
 
+        //aqui vai executar o comando declarado acima no banco, pra listar todos os itens cadastrados
         try (Connection conn = FabricaDeConexoes.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
+            //vai pegando um por um, pra mostrar na aplicação
             while (rs.next()) {
                 ItemMidia item = new ItemMidia(
                         rs.getInt("id"),
@@ -55,6 +59,8 @@ public class ItemMidiaDAO {
                 );
                 itens.add(item);
             }
+
+        //se tiver alguma exceção na execução do bloco acima, mostra a mensagem de erro aqui
         } catch (SQLException e) {
             System.err.println("Erro ao listar ItemMidia: " + e.getMessage());
             throw new SQLException("Não foi possível listar os itens do catálogo.", e);
@@ -68,6 +74,7 @@ public class ItemMidiaDAO {
         String sql = "SELECT id, titulo, autor_diretor, ano_lancamento, genero, sinopse, tipo_midia FROM item_midia " +
                 "WHERE titulo LIKE ? OR autor_diretor LIKE ?";
 
+        //aqui, ele define que a busca vai ser feita quando "titulo" ou "autor_diretor" a palavra/frase digitada em qualquer parte
         String termoBusca = "%" + termo + "%";
 
         try (Connection conn = FabricaDeConexoes.getConexao();
