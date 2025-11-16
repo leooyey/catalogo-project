@@ -9,17 +9,35 @@
 <body>
     <h1>Catálogo de Livros/Filmes</h1>
 
+    <p>
+        <a href="listagem">Ver Lista Completa</a> |
+        <a href="cadastro.jsp">Adicionar Novo Item</a> |
+        <a href="./index.jsp">Voltar para a Home</a>
+    </p>
+
+    <%-- implementação da barra de busca --%>
+    <div style="margin: 20px 0; padding: 10px; border: 1px solid #ccc;">
+        <form action="buscar" method="GET">
+            <label for="termo">Buscar por Título ou Autor/Diretor:</label>
+            <input type="text" id="termo" name="termo" value="<c:out value='${termoBusca}'/>">
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
+
+
     <%-- Exibe mensagem de erro, se houver --%>
     <c:if test="${not empty mensagemErro}">
         <p style="color: red;"><strong>ERRO NO SISTEMA:</strong> ${mensagemErro}</p>
     </c:if>
 
-    <p><a href="./index.jsp">Voltar para a Home</a></p>
+    <%-- aqui vai mostrar o termo digitado na busca --%>
+    <c:if test="${not empty termoBusca}">
+        <h2>Resultados da Busca por: "<c:out value='${termoBusca}'/>"</h2>
+    </c:if>
 
-    <%-- Verifica se a lista de itens (do Servlet) está vazia --%>
     <c:choose>
         <c:when test="${empty itens}">
-            <p>O catálogo está vazio. Nenhum item encontrado no banco de dados.</p>
+            <p>Nenhum item encontrado.</p>
         </c:when>
         <c:otherwise>
             <table border="1" cellpadding="5" cellspacing="0">
@@ -43,9 +61,8 @@
                             <td>${item.anoLancamento}</td>
                             <td>${item.tipoMidia}</td>
                             <td>
-                                <%-- Link futuro para a página de detalhes --%>
-                                <a href="./detalhes?id=${item.id}">Detalhes</a> |
-                                <a href="./editar?id=${item.id}">Editar</a> |
+                                <a href="detalhes?id=${item.id}">Detalhes</a> |
+                                <a href="editar?id=${item.id}">Editar</a> |
                                 <a href="excluir?id=${item.id}" onclick="return confirm('Tem certeza que deseja excluir o item: ${item.titulo}?');">Excluir</a>
                             </td>
                         </tr>
@@ -54,8 +71,6 @@
             </table>
         </c:otherwise>
     </c:choose>
-
-    <p><a href="cadastro.jsp">Cadastrar Novo Item</a></p>
 
 </body>
 </html>
