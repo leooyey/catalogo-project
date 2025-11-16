@@ -22,4 +22,6 @@ Depois, criar uma configuração para rodar local (PARA ISSO, USAR O PLUGIN "Sma
 
 Configuração do "Run" para o Plugin "Smart Tomcat":
 
+OBS: no "Deployment directory", utiizar o snapshot criado depois de dar "Install"
+
 <img width="1371" height="759" alt="apache_tomcat" src="https://github.com/user-attachments/assets/49ee5559-25fb-4385-ad0a-9d8000956dc8" />
