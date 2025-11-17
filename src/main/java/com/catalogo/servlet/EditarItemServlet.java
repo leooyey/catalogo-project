@@ -13,17 +13,40 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-//mapeamento é "/editar", definido tbm no .jsp
+/**
+ * Servlet responsável por processar a requisição que vai editar as informações de um item
+ *
+ * Mapeado para a URL: /editar
+ * (Context Path + /editar -> ex: /catalogo/editar)
+ *
+ * @author leooyey
+ * @version 1.0
+ * @since 2025-11-17
+ */
 @WebServlet("/editar")
 public class EditarItemServlet extends HttpServlet {
 
     private ItemMidiaDAO itemMidiaDAO;
 
+    /**
+     * Inicializa o Servlet e instancia o DAO de ItemMidia.
+     * Chamado pelo Tomcat na inicialização.
+     */
     @Override
     public void init() throws ServletException {
         this.itemMidiaDAO = new ItemMidiaDAO();
     }
 
+    /**
+     * Processa requisições com método GET
+     * Pega o ID do item na requisição, e usa a DAO para buscar o item correto pelo ID
+     * Vai retornar para o .jsp de edição, para daí o usuário editar as informações do item
+     *
+     * @param request objeto HttpServletRequest
+     * @param response objeto HttpServletResponse
+     * @throws ServletException se algum erro do servlet ocorrer
+     * @throws IOException se algum erro de entrada/saída ocorrer
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -50,6 +73,17 @@ public class EditarItemServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Processa requisições com método POST
+     * Com o ID do item, vai setar o ID correspondente, para não gerar sequencialmente
+     * Vai realizar as validações normalmente, para verificar se os dados são validos e se estão corretos
+     * Atualiza as informações do item
+     *
+     * @param request objeto HttpServletRequest
+     * @param response objeto HttpServletResponse
+     * @throws ServletException se algum erro do servlet ocorrer
+     * @throws IOException se algum erro de entrada/saída ocorrer
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

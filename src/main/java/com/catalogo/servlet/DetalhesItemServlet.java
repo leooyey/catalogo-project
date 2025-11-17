@@ -11,17 +11,39 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-//mapeamento é "/detalhes", definido tbm no .jsp
+/**
+ * Servlet responsável por processar a requisição que vai mostrar os detalhes dos itens
+ *
+ * Mapeado para a URL: /detalhes
+ * (Context Path + /detalhes -> ex: /catalogo/detalhes)
+ *
+ * @author leooyey
+ * @version 1.0
+ * @since 2025-11-17
+ */
 @WebServlet("/detalhes")
 public class DetalhesItemServlet extends HttpServlet {
 
     private ItemMidiaDAO itemMidiaDAO;
 
+    /**
+     * Inicializa o Servlet e instancia o DAO de ItemMidia.
+     * Chamado pelo Tomcat na inicialização.
+     */
     @Override
     public void init() throws ServletException {
         this.itemMidiaDAO = new ItemMidiaDAO();
     }
 
+    /**
+     * Processa requisições as requisições com método GET
+     * Usa a DAO para buscar o item correto pelo ID, para retornar para o user
+     *
+     * @param request objeto HttpServletRequest
+     * @param response objeto HttpServletResponse
+     * @throws ServletException se algum erro do servlet ocorrer
+     * @throws IOException se algum erro de entrada/saída ocorrer
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
