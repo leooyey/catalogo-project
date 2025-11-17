@@ -13,21 +13,45 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-//mapeamento é "/cadastrar", definido tbm no .jsp
+/**
+ * Servlet responsável por processar a requisição que irá cadastrar itens novos
+ *
+ * Mapeado para a URL: /cadastrar
+ * (Context Path + /cadastrar -> ex: /catalogo/cadastrar)
+ *
+ * @author leooyey
+ * @version 1.0
+ * @since 2025-11-17
+ */
 @WebServlet("/cadastrar")
 public class CadastrarItemServlet extends HttpServlet {
 
     private ItemMidiaDAO itemMidiaDAO;
 
+    /**
+     * Inicializa o Servlet e instancia o DAO de ItemMidia.
+     * Chamado pelo Tomcat na inicialização.
+     */
     @Override
     public void init() throws ServletException {
         this.itemMidiaDAO = new ItemMidiaDAO();
     }
 
+    /**
+     * Processa requisições com método POST
+     * Usa a DAO para listar todos os itens cadastrados que estejam contamplados pelo termo digitado
+     * Vai realizar as validações necessárias dos campos do item a ser cadastrado
+     *
+     * @param request objeto HttpServletRequest que vai ter os dados do item
+     * @param response objeto HttpServletResponse
+     * @throws ServletException se algum erro do servlet ocorrer
+     * @throws IOException se algum erro de entrada/saída ocorrer
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        //pega os dados digitados na requisição
         String titulo = request.getParameter("titulo");
         String autorDiretor = request.getParameter("autorDiretor");
         String anoStr = request.getParameter("ano");
@@ -35,6 +59,7 @@ public class CadastrarItemServlet extends HttpServlet {
         String tipoMidia = request.getParameter("tipoMidia");
         String sinopse = request.getParameter("sinopse");
 
+        //começa as validações
         List<String> erros = new ArrayList<>();
         int anoLancamento = 0;
 
@@ -70,6 +95,7 @@ public class CadastrarItemServlet extends HttpServlet {
             erros.add("O 'Ano Lançamento' deve ser um número válido.");
         }
 
+        //se tiver erro, retorna pro usuário
         if (!erros.isEmpty()) {
             ItemMidia itemComErro = new ItemMidia(titulo, autorDiretor, anoLancamento, genero, sinopse, tipoMidia);
 
@@ -80,8 +106,10 @@ public class CadastrarItemServlet extends HttpServlet {
             return;
         }
 
+        //insere na DAO o item
         ItemMidia novoItem = new ItemMidia(titulo, autorDiretor, anoLancamento, genero, sinopse, tipoMidia);
 
+        //tenta executar o metodo "inserir" da DAO, pra cadastrar o item no banco
         try {
             itemMidiaDAO.inserir(novoItem);
         } catch (SQLException e) {

@@ -9,9 +9,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO para a entidade ItemMidia.
+ * Responsável pelo CRUD dos itens, com métodos de inserção, exclusão, busca e atualização
+ *
+ * @author leooyey
+ * @version 1.0
+ * @since 2025-11-17
+ */
 public class ItemMidiaDAO {
 
-    //função para inserir os itens cadastrados
+    /**
+     * Insere um novo item no banco
+     *
+     * @param item objeto ItemMidia que tem os dados a serem inseridos.
+     * @throws SQLException se ocorrer um erro durante a operação de INSERT
+     */
     public void inserir(ItemMidia item) throws SQLException {
         String sql = "INSERT INTO item_midia (titulo, autor_diretor, ano_lancamento, genero, sinopse, tipo_midia) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
@@ -36,6 +49,11 @@ public class ItemMidiaDAO {
         }
     }
 
+    /**
+     * Lista todos os itens cadastrados no banco
+     *
+     * @throws SQLException se ocorrer um erro durante a operação de SELECT
+     */
     //função para listar os itens cadastrados
     public List<ItemMidia> listarTodos() throws SQLException {
         List<ItemMidia> itens = new ArrayList<>();
@@ -68,6 +86,13 @@ public class ItemMidiaDAO {
         return itens;
     }
 
+    /**
+     * Busca um item no banco que contenha, no autor/diretor ou no título, o termo digitado pelo usuário
+     * Numa lista, ele vai armazenando todos os itens que estão dentro do termo digitado
+     *
+     * @param termo string que vai conter o que o usuário digitou na barra de pesquisa no .jsp de listagem
+     * @throws SQLException se ocorrer um erro durante a operação de SELECT
+     */
     //busca itens cadastrados por parâmetro
     public List<ItemMidia> buscar(String termo) throws SQLException {
         List<ItemMidia> itens = new ArrayList<>();
@@ -104,7 +129,13 @@ public class ItemMidiaDAO {
         return itens;
     }
 
-    //função pra buscar os itens por id
+    /**
+     * Faz a busca de itens no banco pelo ID
+     * Usado em consultas onde tem que filtrar certinho pelo ID
+     *
+     * @param id Id do item no banco
+     * @throws SQLException se ocorrer um erro durante a operação de SELECT
+     */
     public ItemMidia buscarPorId(int id) throws SQLException {
         String sql = "SELECT * FROM item_midia WHERE id = ?";
         ItemMidia item = null;
@@ -134,7 +165,12 @@ public class ItemMidiaDAO {
         return item;
     }
 
-    //função pra atualizar itens jah existentes no banco
+    /**
+     * Atualiza as informações de um item já existente no banco
+     *
+     * @param item objeto ItemMidia que tem os dados a serem inseridos.
+     * @throws SQLException se ocorrer um erro durante a operação de UPDATE
+     */
     public void atualizar(ItemMidia item) throws SQLException {
         String sql = "UPDATE item_midia SET titulo = ?, autor_diretor = ?, ano_lancamento = ?, " +
                 "genero = ?, sinopse = ?, tipo_midia = ? WHERE id = ?";
@@ -158,7 +194,12 @@ public class ItemMidiaDAO {
         }
     }
 
-    //função pra excluir um item cadastrado (aqui exclui por id)
+    /**
+     * Exclui um item no banco
+     *
+     * @param id Id do objeto que vai ser excluído
+     * @throws SQLException se ocorrer um erro durante a operação de DELETE
+     */
     public void excluir(int id) throws SQLException {
         String sql = "DELETE FROM item_midia WHERE id = ?";
 

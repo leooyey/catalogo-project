@@ -12,17 +12,39 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-//mapeamento é "/buscar", definido tbm no .jsp
+/**
+ * Servlet responsável por processar a requisição que irá buscar os itens cadastrados conforme o termo digitado na barra de pesquisa da listagem
+ *
+ * Mapeado para a URL: /buscar
+ * (Context Path + /buscar -> ex: /catalogo/buscar)
+ *
+ * @author leooyey
+ * @version 1.0
+ * @since 2025-11-17
+ */
 @WebServlet("/buscar")
 public class BuscarItemServlet extends HttpServlet {
 
     private ItemMidiaDAO itemMidiaDAO;
 
+    /**
+     * Inicializa o Servlet e instancia o DAO de ItemMidia.
+     * Chamado pelo Tomcat na inicialização.
+     */
     @Override
     public void init() throws ServletException {
         this.itemMidiaDAO = new ItemMidiaDAO();
     }
 
+    /**
+     * Processa requisições com método GET
+     * Usa a DAO para listar todos os itens cadastrados que estejam contamplados pelo termo digitado
+     *
+     * @param request objeto HttpServletRequest
+     * @param response objeto HttpServletResponse
+     * @throws ServletException se algum erro do servlet ocorrer
+     * @throws IOException se algum erro de entrada/saída ocorrer
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
